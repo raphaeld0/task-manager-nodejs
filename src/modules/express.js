@@ -111,10 +111,30 @@ app.delete("/users", async (req, res) => {
         res.status(200).json({ mensagem: `${deletado.deletedCount} users.` });
 });
 
+//get login
+app.get("/login", async (req,res) =>{
+    res.render("login");
+})
+
+//post login
+app.post("/login", async (req,res) =>{
+    const {email,password} = req.body;
+    const user = await User.findOne({email});
+
+    if (!user){
+        console.log("email errado")
+        return res.send(`email errado`);}
+    
+    const tacerta = await bcrypt.compare(password, user.password);
+
+    if (!tacerta){return res.send("senha errada")}
+
+    return res.send("login certo")
+})
 
 
 
 
 app.listen(port, () => {
-    console.log(`listen`);
+    console.log(`listening...`);
 });
