@@ -28,20 +28,3 @@
 | **Database** | MongoDB (via Mongoose)      |
 | **Auth**     | JWT, Bcrypt                 |
 | **Email**    | ???  |
-
----
-
-## 📦 Installation
-
-### 🧰 Pre-requisites
-
-- Node.js & npm
-- MongoDB
-- A Gmail account for Nodemailer (or other SMTP)
-
-### 🔧 Backend Setup
-
-```bash
-git clone https://github.com/raphaeld0/task-manager-nodejs
-cd task-manager-api/backend
-npm install
