@@ -6,9 +6,10 @@ import { useNavigate, Link } from 'react-router-dom';
 function DashboardTasks() {
     const [currentTime, setCurrentTime] = useState(new Date().toLocaleTimeString());
     const [currentDate, setCurrentDate] = useState(new Date().toLocaleDateString('pt-BR'));
+    const navigate = useNavigate();
 
     useEffect(() => {
-        document.title = 'Dashboard';
+        document.title = 'Dashboard - Tasks';
 
         const interval = setInterval(() => {
             setCurrentTime(new Date().toLocaleTimeString());
@@ -18,6 +19,12 @@ function DashboardTasks() {
 
         return () => clearInterval(interval);
     }, []);
+
+
+    const logOut = () => {
+        localStorage.removeItem('token'); 
+        navigate('/login'); 
+    };
 
     return (
         <>
@@ -43,7 +50,7 @@ function DashboardTasks() {
                 <Link to="/dashboard/tasks"><button className={styles.activeButton}>Tasks</button></Link>
                 <Link to="/dashboard/settings"><button>Settings</button></Link>
                 <Link to="/dashboard/help"><button>Help</button></Link>
-                <div className={styles.logout}><button>Logout</button></div>
+                <div className={styles.logout}><button onClick={logOut}>Logout</button></div>
             </div>
 
             <div className={styles.content}>

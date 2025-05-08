@@ -7,6 +7,7 @@ import Login from './pages/login/login.jsx';
 import Register from './pages/register/register.jsx';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { Navigate } from 'react-router-dom';
+import ProtectedRoute from '../src/service/protectedRoute.js';
 
 const pages = createBrowserRouter([
   {
@@ -23,11 +24,17 @@ const pages = createBrowserRouter([
   },
   {
     path: '/dashboard',
-    element: <Dashboard />,
+    element: (
+      <ProtectedRoute>
+        <Dashboard />
+      </ProtectedRoute>),
   },
   {
     path: '/dashboard/tasks',
-    element: <DashboardTasks />,
+    element: (
+      <ProtectedRoute>
+        <DashboardTasks />
+      </ProtectedRoute>),
   }
 ]);
 

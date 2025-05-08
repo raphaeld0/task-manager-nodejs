@@ -55,7 +55,8 @@ app.set("views", "public/views");
 app.get("/tasks", async (req, res) => {
     try {
         const tasks = await Task.find();
-        res.render("task", { task: tasks });
+        const taskCount = await Task.countDocuments({ userId: req.user.id });
+        res.status(200).json({ tasks, totalTasks: taskCount });
     } catch (err) {
         console.error(err);
         res.status(500).send("deu erro");

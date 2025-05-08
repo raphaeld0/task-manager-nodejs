@@ -8,6 +8,7 @@ function Dashboard() {
     const [currentDate, setCurrentDate] = useState(new Date().toLocaleDateString('pt-BR'));
     const [formattedDate, setFormattedDate] = useState('');
     const [dailyReminder, setDailyReminder] = useState('');
+    const navigate = useNavigate(); 
 
     useEffect(() => {
         document.title = 'Dashboard';
@@ -35,6 +36,11 @@ function Dashboard() {
         return () => clearInterval(interval);
     }, []);
 
+    const logOut = () => {
+        localStorage.removeItem('token'); 
+        navigate('/login'); 
+    };
+
     return (
         <><div className={styles.page}>
             <div className={styles.topBar}>
@@ -54,12 +60,11 @@ function Dashboard() {
                 <h1>Raphael Dias</h1>
                 <p>raphael@gmail.com</p>
 
-
                 <Link to="/dashboard"><button className={styles.activeButton}>Dashboard</button></Link>
                 <Link to="/dashboard/tasks"><button>Tasks</button></Link>
                 <Link to="/dashboard/settings"><button>Settings</button></Link>
                 <Link to="/dashboard/help"><button>Help</button></Link>
-                <div className={styles.logout}><button>Logout</button></div>
+                <div className={styles.logout}><button onClick={logOut}>Logout</button></div>
             </div>
 
             <div className={styles.content}>
@@ -67,7 +72,7 @@ function Dashboard() {
                 <div className={styles.contentsemH1}>
 
                     <div className={styles.todoDiv}>
-                        <svg className={styles.emote2} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" width="24" height="24" stroke-width="2">
+                        <svg className={styles.emote2} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" width="24" height="24" strokeWidth="2">
                             <path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2"></path>
                             <path d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z"></path>
                             <path d="M9 12h6"></path>
@@ -84,7 +89,7 @@ function Dashboard() {
 
                     <div className={styles.taskDiv}>
                         <div>
-                            <svg className={styles.emoteTask} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" width="24" height="24" stroke-width="2">
+                            <svg className={styles.emoteTask} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" width="24" height="24" strokeWidth="2">
                                 <path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2"></path>
                                 <path d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z"></path>
                                 <path d="M9 14l2 2l4 -4"></path>
@@ -98,7 +103,7 @@ function Dashboard() {
                         </div>
                     </div>
                     <div className={styles.remDiv}>
-                        <svg className={styles.emote3} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" width="24" height="24" stroke-width="2">
+                        <svg className={styles.emote3} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" width="24" height="24" strokeWidth="2">
                             <path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2"></path>
                             <path d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z"></path>
                             <path d="M11.993 16.75l2.747 -2.815a1.9 1.9 0 0 0 0 -2.632a1.775 1.775 0 0 0 -2.56 0l-.183 .188l-.183 -.189a1.775 1.775 0 0 0 -2.56 0a1.899 1.899 0 0 0 0 2.632l2.738 2.825z"></path>
