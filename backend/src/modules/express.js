@@ -48,15 +48,11 @@ function authorizeAdmin(req, res, next) {
     next();
 }
 
-app.set("view engine", "ejs");
-app.set("views", "public/views");
-
 //get task de todas as tasks
 app.get("/tasks", async (req, res) => {
     try {
         const tasks = await Task.find();
-        const taskCount = await Task.countDocuments({ userId: req.user.id });
-        res.status(200).json({ tasks, totalTasks: taskCount });
+        res.status(200).json({ tasks});
     } catch (err) {
         console.error(err);
         res.status(500).send("deu erro");
@@ -138,12 +134,6 @@ app.post("/register", async (req, res) => {
     }
 });
 
-
-//register render
-app.get("/register", async (req, res) => {
-    res.render("register")
-})
-
 // get user somente no insomnia
 app.get("/users", async (req, res) => {
     const Users = await User.find();
@@ -220,10 +210,6 @@ app.put("/users/:id", async (req, res) => {
     }
 });
 
-//get login
-app.get("/login", async (req, res) => {
-    res.render("login");
-})
 
 //post login
 app.post('/login', async (req, res) => {
