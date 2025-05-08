@@ -68,7 +68,8 @@ app.get("/tasks", async (req, res) => {
 app.get("/task", authenticateToken, async (req, res) => {
     try {
         const tasks = await Task.find({ userId: req.user.id });
-        res.status(200).json(tasks);
+        const taskCount = await Task.countDocuments({ userId: req.user.id });
+        res.status(200).json({tasks, totalTasks: taskCount});
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "An error occurred while fetching tasks." });
@@ -239,7 +240,7 @@ app.post('/login', async (req, res) => {
         return res.status(401).json({ message: "Invalid email or password" });
     }
 
-    const token = jwt.sign({ id: user._id, email: user.email, role: user.role }, jwtKey, { expiresIn: '1h' });
+    const token = jwt.sign({ id: user._id, email: user.email, role: user.role, username: user.username}, jwtKey, { expiresIn: '1h' });
 
     res.status(200).json({ message: "Login successful", token });
 });

@@ -24,7 +24,7 @@ function Login() {
       if (response.status === 200) {
         // token!!!!!
         localStorage.setItem('token', response.data.token);
-        navigate('/home'); 
+        navigate('/dashboard'); 
       } else if (response.status === 400) {
         alert('Invalid email or password');
       } else if (response.status === 401) {
