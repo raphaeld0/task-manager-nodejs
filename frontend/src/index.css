@@ -1,0 +1,19 @@
+* {
+    font-weight: 400;
+    font-style: normal;
+    font-size: 18px;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  html, body {
+    height: 100%;
+    width: 100%;
+    font-family: "Poppins", sans-serif;
+    color: #f0f0f5;
+    background: linear-gradient(90deg, #ffffff 0%, #f2f0f5 100%);
+    overflow-x: hidden;
+  }
+  
+  

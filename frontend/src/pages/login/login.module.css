@@ -1,0 +1,116 @@
+.page{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #6f4ce9;
+}
+
+.inputs {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 40px 30px 30px;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+}
+
+
+.page h1 {
+  text-align: center;
+  margin-bottom: 30px;
+  font-weight: 700;
+  font-size: 1.8rem;
+  letter-spacing: 1px;
+  color: #ffffff;
+}
+
+.email, .password, .username {
+  margin-bottom: 25px;
+  display: flex;
+  flex-direction: column;
+}
+
+.page p {
+  padding-bottom: 3px;
+  color: #ddd;
+}
+
+.register{
+  padding-top: 15px;
+  justify-content: center;
+  text-align: center;
+}
+
+.page input {
+  width: 100%;
+  padding: 12px 15px;
+  border-radius: 10px;
+  border: none;
+  font-size: 1rem;
+  outline: none;
+  transition: box-shadow 0.3s ease, background 0.3s ease;
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+}
+
+
+.page input::placeholder {
+  color: #ccc;
+}
+
+.page input:focus {
+  box-shadow: 0 0 8px 3px #845ef7;
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.loginButton {
+  margin-top: 20px;
+  width: 100%;
+  background: #6d4dce;
+  border: 0;
+  padding: 14px;
+  color: white;
+  font-size: 1.15rem;
+  font-weight: 700;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 5px 15px rgba(132, 94, 247, 0.5);
+}
+
+.loginButton:hover {
+  background: #7f61ee;
+  box-shadow: 0 6px 20px rgba(111, 76, 233, 0.7);
+}
+
+.linkContainer {
+  display: flex;
+  justify-content: center; 
+  align-items: center;    
+  text-decoration: none;
+  color: inherit;
+  gap: 4px;
+}
+
+.highlight {
+  color: white;
+  font-weight: bold;
+}
+
+.checkboxContainer {
+  display: flex;
+  align-items: center;
+  margin: 0; 
+  padding: 0; 
+}
+.page input[type="checkbox"] {
+  width: 20px; 
+  height: 20px;
+  margin: 0; 
+  padding: 0;
+  box-sizing: border-box; 
+  margin-right: 5px;
+  border: 0px;
+  border-radius: 20px;
+}
