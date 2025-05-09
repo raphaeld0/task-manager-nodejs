@@ -4,6 +4,7 @@ import iconExample from '../../assets/imgs/iconexample.png';
 import { useNavigate, Link } from 'react-router-dom';
 import api from '../../service/api';
 import decodeToken from '../../service/jwtDecode';
+import checkToken from '../../service/checkToken';
 
 function Dashboard() {
     const [currentTime, setCurrentTime] = useState(new Date().toLocaleTimeString());
@@ -76,7 +77,9 @@ function Dashboard() {
     
         fetchTasks();
     }, [navigate]);
-
+useEffect(() => {
+        checkToken(navigate); // Valida o token ao montar o componente
+    }, [navigate]);
 
     const logOut = () => {
         localStorage.removeItem('token');

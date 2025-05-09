@@ -4,6 +4,7 @@ import iconExample from '../../../assets/imgs/iconexample.png';
 import { useNavigate, Link } from 'react-router-dom';
 import api from '../../../service/api';
 import decodeToken from '../../../service/jwtDecode'
+import checkToken from '../../../service/checkToken'
 
 
 function DashboardTasks() {
@@ -29,30 +30,35 @@ function DashboardTasks() {
     }, []);
 
     useEffect(() => {
-        const fetchTasks = async () => {
-            try {
-                const response = await api.get('/task', {
-                    headers: {
-                        Authorization: `Bearer ${localStorage.getItem('token')}`,
-                    },
-                });
-                setTasks(response.data.tasks);
-                setTotalTasks(response.data.totalTasks);
-            } catch (error) {
-                console.error('Error fetching tasks:', error);
-                if (error.response && error.response.status === 401) {
-                    navigate('/login');
-                }
-            }
-        };
+    const fetchTasks = async () => {
+        try {
+            const response = await api.get('/task', {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('token')}`,
+                },
+            });
+            setTasks(response.data.tasks);
+            setTotalTasks(response.data.totalTasks);
+        } catch (error) {
+            console.error('Error fetching tasks:', error);
 
-        fetchTasks();
-    }, [navigate]);
+            if (error.response && error.response.status === 403) {
+                console.error('Token is invalid or expired');
+                localStorage.removeItem('token');
+                navigate('/login'); 
+            }
+        }
+    };
+
+    checkToken(navigate);
+    fetchTasks();
+}, [navigate]);
 
     const logOut = () => {
         localStorage.removeItem('token');
         navigate('/login');
     };
+
 
     return (
         <>
@@ -74,7 +80,7 @@ function DashboardTasks() {
                     <h1>{firstName}</h1>
                     <p>{decoded.email}</p>
 
-                    <Link to="/dashboard"><button>Dashboard</button></Link>
+                    <Link to="/dashboard"><button onClick={checkToken}>Dashboard</button></Link>
                     <Link to="/dashboard/tasks"><button className={styles.activeButton}>Tasks</button></Link>
                     <Link to="/dashboard/settings"><button>Settings</button></Link>
                     <Link to="/dashboard/help"><button>Help</button></Link>
