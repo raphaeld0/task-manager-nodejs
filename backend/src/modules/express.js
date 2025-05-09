@@ -250,5 +250,3 @@ app.get('/tasks/:_id', authenticateToken, (req, res) => {
 app.listen(port, () => {
     console.log(`listening...`);
 });
-
-//get das tasks de um user

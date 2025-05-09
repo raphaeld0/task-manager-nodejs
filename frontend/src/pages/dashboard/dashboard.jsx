@@ -54,7 +54,8 @@ function Dashboard() {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem('token')}`,
                     },
-                });
+                }); 
+                console.log('Response:', response.data); 
     
                 const tasksData = response.data.tasks;
                 setTasks(tasksData); 
