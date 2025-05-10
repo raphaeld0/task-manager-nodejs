@@ -13,8 +13,8 @@ function Dashboard() {
     const [dailyReminder, setDailyReminder] = useState('');
     const [tasks, setTasks] = useState([]);
     const [totalTasks, setTotalTasks] = useState(0);
-    const [completedTasks, setCompletedTasks] = useState(0); 
-    const [pendingTasks, setPendingTasks] = useState(0); 
+    const [completedTasks, setCompletedTasks] = useState(0);
+    const [pendingTasks, setPendingTasks] = useState(0);
     const navigate = useNavigate();
     const decoded = decodeToken();
 
@@ -47,7 +47,7 @@ function Dashboard() {
         return () => clearInterval(interval);
     }, []);
 
-    
+
     useEffect(() => {
         const fetchTasks = async () => {
             try {
@@ -55,16 +55,16 @@ function Dashboard() {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem('token')}`,
                     },
-                }); 
-                console.log('Response:', response.data); 
-    
+                });
+                console.log('Response:', response.data);
+
                 const tasksData = response.data.tasks;
-                setTasks(tasksData); 
-                setTotalTasks(response.data.totalTasks); 
-    
+                setTasks(tasksData);
+                setTotalTasks(response.data.totalTasks);
+
                 const completed = tasksData.filter(task => task.status === true).length;
                 const pending = tasksData.filter(task => task.status === false).length;
-    
+
                 setCompletedTasks(completed);
                 setPendingTasks(pending);
             } catch (error) {
@@ -74,11 +74,11 @@ function Dashboard() {
                 }
             }
         };
-    
+
         fetchTasks();
     }, [navigate]);
-useEffect(() => {
-        checkToken(navigate); // Valida o token ao montar o componente
+    useEffect(() => {
+        checkToken(navigate);
     }, [navigate]);
 
     const logOut = () => {
@@ -128,9 +128,12 @@ useEffect(() => {
                             To-Do
 
                             <div className={styles.formattedDate}><p>{formattedDate} <span> - Today </span></p></div>
-                            <Link to="/dashboard/tasks"><button className={styles.MAIS}>
-                                <span>+</span> Add Task
-                            </button></Link>
+                            <Link to="/dashboard/tasks" state={{ openModal: true }}>
+                                <button className={styles.MAIS}>
+                                    <span>+</span> Add Task
+                                </button>
+                            </Link>
+
                         </div>
 
                         <div className={styles.taskDiv}>
@@ -161,8 +164,8 @@ useEffect(() => {
                     </div>
 
                 </div></div>
-            </>
-        );
-    }
+        </>
+    );
+}
 
 export default Dashboard;

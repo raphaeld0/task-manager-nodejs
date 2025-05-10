@@ -54,7 +54,7 @@
     box-shadow: 0 10px 5px rgba(0, 0, 0, 0.3);
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
-    z-index: 123123;
+    z-index: 12;
     border-top-right-radius: 20px;
     text-align: center;
 }
@@ -120,7 +120,7 @@
     justify-content: center;
     align-items: center;
     height: 76vh;
-    transform: translateX(5%);
+    transform: translateX(10%);
     gap: 25px;
 
 }
@@ -136,6 +136,7 @@
     color: black;
     font-weight: 400;
     font-size: 35px;
+    transform: translateX(-15%);
 }
 
 .content span {
@@ -163,7 +164,6 @@
 }
 
 
-
 .emote2 {
     display: inline-block;
     transform: translateY(5px);
@@ -184,7 +184,7 @@
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
     width: 1200px;
-    height: 40vh;
+    height: 60vh;
 }
 
 .remDiv {
@@ -212,7 +212,6 @@
     padding-top: 20px;
     border-radius: 20px;
     color: #6f4ce9;
-    ;
     background: rgba(255, 255, 255, 0.1);
     box-shadow: 0 5px 5px rgba(0, 0, 0, 0.3);
     backdrop-filter: blur(15px);
@@ -289,6 +288,10 @@
     padding-bottom: 10px;
 }
 
+.taskItem p {
+    word-break: break-word;
+    margin: 5px 0; 
+}
 
 .taskItem h2 {
     font-size: 18px;
@@ -320,4 +323,140 @@
     justify-content: space-between;
     align-items: center;
     margin-right: 75px;
+}
+
+
+.taskList {
+    margin-top: 10px;
+    max-height: 500px; 
+    overflow-y: auto; 
+    padding: 10px;
+    padding-right: 30px;
+    list-style: none;
+}
+
+
+.taskList::-webkit-scrollbar {
+    width: 10px; 
+    background-color: #f1f1f1; 
+    border-top-right-radius: 10px;
+}
+
+.taskList::-webkit-scrollbar-thumb {
+    background-color: #59575e; 
+    border-top-right-radius: 10px;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 5px;
+    border: 2px solid #f1f1f1;
+}
+
+.taskList::-webkit-scrollbar-thumb:hover {
+    background-color: rgb(181, 179, 187); 
+}
+.taskList::-webkit-scrollbar-button {
+    display: none; 
+};
+
+
+.taskItem :hover {
+    background-color: #f0f0f0; 
+    cursor: pointer; 
+}
+
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.modalContent {
+    color: black;
+    display: flex;
+    flex-direction: column;
+    background: rgb(230, 230, 230);
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.3);
+    z-index: 10000; 
+    width: 300px;
+    gap: 15px;
+}
+
+.modalContent h2 {
+    font-size: 24px;
+    margin-bottom: 5px;
+    text-align: center;
+    border-bottom: 2px solid #ccc;
+}
+
+.modalContent label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.modalContent input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.modalContent button {
+    background-color: #5c3dcc;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;    
+}
+
+.modalContent button:hover {
+    background-color: #8161f3;
+}
+
+.modalBtn{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.modalBtn .cancel{
+    background-color: rgb(179, 78, 78);
+}
+
+
+.modalBtn .cancel:hover{
+    background-color: rgb(243, 128, 128);
+}
+
+.modalContent .description {
+    height: 100px;
+    max-height: 300px;
+    width: 100%; 
+    word-break: break-word; 
+    resize: vertical; 
+    padding: 10px;
+    border-radius: 2px;
+}
+
+.desc {
+    font-weight: 600;
+    margin-top: 15px;
+}
+
+.ti {
+    font-weight: 600;
+}
+
+.modalContent .title{
+    width: 100%;
 }

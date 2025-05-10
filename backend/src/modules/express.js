@@ -77,11 +77,10 @@ app.post("/task", authenticateToken, async (req, res) => {
     try {
         const { title, description } = req.body;
 
-        // Cria a tarefa com o ID do usuário autenticado
         const newTask = new Task({
             title,
             description,
-            userId: req.user.id, // Associa a tarefa ao usuário autenticado
+            userId: req.user.id, 
         });
 
         await newTask.save();
