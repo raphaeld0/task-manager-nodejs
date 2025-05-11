@@ -11,9 +11,9 @@ function DashboardTasks() {
     const [currentDate, setCurrentDate] = useState(new Date().toLocaleDateString('pt-BR'));
     const [tasks, setTasks] = useState([]);
     const [totalTasks, setTotalTasks] = useState(0);
-    const [newTaskTitle, setNewTaskTitle] = useState(''); 
+    const [newTaskTitle, setNewTaskTitle] = useState('');
     const [newTaskDescription, setNewTaskDescription] = useState('');
-    const [isModalOpen, setIsModalOpen] = useState(false); 
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const navigate = useNavigate();
     const decoded = decodeToken();
     const location = useLocation();
@@ -108,8 +108,43 @@ function DashboardTasks() {
         } catch (error) {
             console.error('Error adding task:', error);
         }
-    }
 
+
+    }
+    const deleteTask = async (taskId) => {
+        try {
+            await api.delete(`/task/${taskId}`, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('token')}`,
+                },
+            });
+
+        } catch (error) {
+            console.error('Error deleting task:', error);
+        }
+        window.location.reload();
+    };
+
+
+    const updateTaskStatus = async (taskId) => {
+        try {
+            const response = await api.put(`/task/${taskId}`, { status: true }, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('token')}`,
+                },
+            });
+
+            setTasks((prevTasks) =>
+                prevTasks.map((task) =>
+                    task._id === taskId ? { ...task, status: true } : task
+                )
+
+            );
+        } catch (error) {
+            console.error('Error updating task status:', error);
+        }
+        window.location.reload();
+    }
     return (
         <>
             <div className={styles.page}>
@@ -187,17 +222,35 @@ function DashboardTasks() {
 
                         <ol className={styles.taskList}>
                             {tasks.length > 0 ? (
-                                tasks.map((task, index) => (
-                                    <li key={index} className={styles.taskItem}>
-                                        <div className={styles.titleStatus}>
-                                            <h2>{task.title}</h2>
-                                            <div className={styles.status}>
-                                                Status: {task.status ? 'Completed' : 'Pending'}
+                                tasks
+                                    .slice()
+                                    .sort((a, b) => a.status - b.status)
+                                    .map((task, index) => (
+                                        <li key={index} className={styles.taskItem}>
+                                            <div className={styles.titleStatus}>
+                                                <h2>{task.title}</h2>
+                                                <div className={styles.status}>
+                                                    Status: {task.status ? 'Completed' : 'Pending'}
+                                                </div>
                                             </div>
-                                        </div>
-                                        <p>{task.description}</p>
-                                    </li>
-                                ))
+                                            <p>{task.description}</p>
+                                            <div className={styles.buttons}>
+                                                <button
+                                                    className={styles.confirmButton}
+                                                    onClick={() => updateTaskStatus(task._id)}
+                                                    disabled={task.status}
+                                                >
+                                                    Finish Task
+                                                </button>
+                                                <button
+                                                    className={styles.deleteButton}
+                                                    onClick={() => deleteTask(task._id)}
+                                                >
+                                                    Delete
+                                                </button>
+                                            </div>
+                                        </li>
+                                    ))
                             ) : (
                                 <p>No tasks available</p>
                             )}
@@ -220,7 +273,7 @@ function DashboardTasks() {
                                     onChange={(e) => setNewTaskTitle(e.target.value)}
                                     required
                                     className={styles.title}
-                                    placeholder='Title'
+                                    placeholder='Do super cool stuff!'
                                 />
                             </label>
                             <label><div className={styles.desc}>
@@ -230,7 +283,7 @@ function DashboardTasks() {
                                     onChange={(e) => setNewTaskDescription(e.target.value)}
                                     required
                                     className={styles.description}
-                                    placeholder='Description'
+                                    placeholder='Climb a mountain, go to the beach...'
                                 />
                             </label>
                             <div className={styles.modalBtn}>

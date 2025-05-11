@@ -1,0 +1,129 @@
+/* necessario */
+.topBar h1 {
+    font-size: 30px;
+    color: black;
+    padding-left: 60px;
+    font-weight: 600;
+}
+
+.dash{
+    font-size: 30px;
+    color:  #6f4ce9;
+    font-weight: 600;
+}
+
+.topBar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 30px;
+    color: #fff;
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 10px 5px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    font-style: bold;
+}
+
+.right {
+    font-style: bold;
+    display: flex;
+    justify-content: right;
+    width: 200px;
+}
+
+.time {
+    color: black;
+}
+
+.date {
+    color:  #6f4ce9;
+}
+
+.leftBar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 350px;
+    height: 83vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 20px 30px;
+    color: #fff;
+    background-color: #6f4ce9;
+    box-shadow: 0 10px 5px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    z-index: 123123;
+    border-top-right-radius: 20px;
+    text-align: center;
+}
+
+.leftBar h1 {
+    transform: translateY(-200%);
+}
+
+.leftBar p{    
+    transform: translateY(-250%);
+    font-size: 15px;
+}
+
+.leftBar button {
+    font-style: bold;
+    font-weight: 600;
+    background-color: #7355e2;
+    color: white;
+    border: 0;
+    width: 270px;
+    border-radius: 10px;
+    height: 50px;
+    margin-bottom: 10px;
+    transform: translateX(4%);
+}
+
+.leftBar button:hover {
+    background-color: white;
+    color:  #6f4ce9;
+    transition: background-color 0.5s ease, color 1s ease;
+    cursor: pointer;
+}
+
+.logout{
+    font-style: bold;
+    font-weight: 600;
+    color:  #6f4ce9;
+    border: 0;
+    width: 270px;
+    border-radius: 10px;
+    height: 50px;
+    margin-top: 320px;
+    bottom: 0;
+}
+.icon {
+    width: 90px;
+    border-radius: 50px;
+    transform: translateY(-70%) translateX(100px); 
+}
+
+.leftBar button.activeButton {
+    background-color: white; 
+    color:  #6f4ce9;
+    border: 1px solid  #5c3dcc;
+}
+.formattedDate p {
+    padding-top: 5px;
+    color: black;
+    font-size: 15px;
+    transform: translateX(4px);
+}
+
+.formattedDate span{
+    color: black;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 200;
+}
+
+
+/* fim do necessario */

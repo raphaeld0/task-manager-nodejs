@@ -1,6 +1,7 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import './index.css'
+import DashboardSettings from './pages/dashboard/settings/dashboardsettings.jsx';
 import DashboardTasks from './pages/dashboard/tasks/dashboardTasks.jsx';
 import Dashboard from './pages/dashboard/dashboard.jsx';
 import Login from './pages/login/login.jsx';
@@ -34,6 +35,13 @@ const pages = createBrowserRouter([
     element: (
       <ProtectedRoute>
         <DashboardTasks />
+      </ProtectedRoute>),
+  },
+  {
+    path: '/dashboard/settings',
+    element: (
+      <ProtectedRoute>
+        <DashboardSettings/>
       </ProtectedRoute>),
   }
 ]);

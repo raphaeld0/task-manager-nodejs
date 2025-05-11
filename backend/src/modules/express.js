@@ -34,7 +34,7 @@ function authenticateToken(req, res, next) {
             console.error("Token verification error:", err);
             return res.status(403).json({ message: "Invalid token." });
         }
-        console.log("Decoded token:", user); 
+        console.log("Decoded token:", user);
         req.user = user;
         next();
     });
@@ -52,7 +52,7 @@ function authorizeAdmin(req, res, next) {
 app.get("/tasks", async (req, res) => {
     try {
         const tasks = await Task.find();
-        res.status(200).json({ tasks});
+        res.status(200).json({ tasks });
     } catch (err) {
         console.error(err);
         res.status(500).send("deu erro");
@@ -65,7 +65,7 @@ app.get("/task", authenticateToken, async (req, res) => {
     try {
         const tasks = await Task.find({ userId: req.user.id });
         const taskCount = await Task.countDocuments({ userId: req.user.id });
-        res.status(200).json({tasks, totalTasks: taskCount});
+        res.status(200).json({ tasks, totalTasks: taskCount });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "An error occurred while fetching tasks." });
@@ -80,9 +80,12 @@ app.post("/task", authenticateToken, async (req, res) => {
         const newTask = new Task({
             title,
             description,
-            userId: req.user.id, 
+            userId: req.user.id,
         });
 
+        const user = req.user;
+        const token = jwt.sign({ id: user._id, email: user.email, role: user.role, username: user.username }, jwtKey, { expiresIn: '1h' });
+        res.send(token)
         await newTask.save();
         res.status(201).json({ message: "Task created successfully", task: newTask });
     } catch (error) {
@@ -96,7 +99,9 @@ app.post("/task", authenticateToken, async (req, res) => {
 app.delete("/task/:id", async (req, res) => {
     try {
         await Task.findByIdAndDelete(req.params.id);
-        res.redirect("/task");
+        const user = req.user;
+        const token = jwt.sign({ id: user._id, email: user.email, role: user.role, username: user.username }, jwtKey, { expiresIn: '1h' });
+        res.send(token)
     } catch (error) {
         console.error(error);
         res.status(500).send("deu erro");
@@ -105,7 +110,7 @@ app.delete("/task/:id", async (req, res) => {
 
 // get tasks somente no insomnia
 app.get("/tasks", authenticateToken, async (req, res) => {
-    const Tasks = await Task.find({userId: req.user.id});
+    const Tasks = await Task.find({ userId: req.user.id });
     res.status(200).json(Tasks);
 })
 //post register user
@@ -168,7 +173,35 @@ app.delete("/tasks", async (req, res) => {
         return res.status(404).json({ mensagem: "nenhum task." });
     }
     res.status(200).json({ mensagem: `${deletado.deletedCount} tasks.` });
-    
+
+});
+
+
+//updade do status de uma task
+
+app.put("/task/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { status } = req.body;
+
+        const updatedTask = await Task.findByIdAndUpdate(
+            id,
+            { status },
+            { new: true }
+        );
+
+        if (!updatedTask) {
+            return res.status(404).json({ message: "Task not found." });
+        }
+
+        const user = req.user;
+        const token = jwt.sign({ id: user._id, email: user.email, role: user.role, username: user.username }, jwtKey, { expiresIn: '1h' });
+        res.send(token)
+        res.status(200).json({ message: "Task updated successfully.", task: updatedTask });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "An error occurred while updating the task." });
+    }
 });
 
 
@@ -225,7 +258,7 @@ app.post('/login', async (req, res) => {
         return res.status(401).json({ message: "Invalid email or password" });
     }
 
-    const token = jwt.sign({ id: user._id, email: user.email, role: user.role, username: user.username}, jwtKey, { expiresIn: '2h' });
+    const token = jwt.sign({ id: user._id, email: user.email, role: user.role, username: user.username }, jwtKey, { expiresIn: '1h' });
 
     res.status(200).json({ message: "Login successful", token });
 });
