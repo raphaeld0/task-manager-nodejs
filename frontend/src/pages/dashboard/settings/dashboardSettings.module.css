@@ -127,3 +127,29 @@
 
 
 /* fim do necessario */
+
+
+
+.content {
+    color: black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 76vh;
+    transform: translateX(10%);
+    gap: 25px;
+
+}
+.content .settingsDiv {
+    background-color: white;
+    padding: 20px;
+    padding-top: 20px;
+    border-radius: 20px;
+    color: #6f4ce9;
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    height: 23vh;
+}

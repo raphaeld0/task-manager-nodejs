@@ -86,6 +86,95 @@ function DashboardSettings() {
         navigate('/login');
     };
 
+    const updateUsername = async () => {
+        const newUsername = document.querySelector('.inputName input').value;
+
+        if (!newUsername) {
+            alert('Please enter a new username.');
+            return;
+        }
+
+        const userId = decoded.id;
+
+        try {
+            const response = await api.put(`/users/${userId}`, {
+                username: newUsername,
+            }, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('token')}`,
+                },
+            });
+
+            console.log('Username updated:', response.data);
+            alert('Username updated successfully!');
+        } catch (error) {
+            console.error('Error updating username:', error.response?.data || error.message);
+            alert('Error updating username.');
+        }
+    };
+
+    const updateEmail = async () => {
+        const newEmail = document.querySelector('.inputEmail input').value;
+
+        if (!newEmail) {
+            alert('Please enter a new email.');
+            return;
+        }
+
+        const userId = decoded.id;
+
+        try {
+            const response = await api.put(`/users/${userId}`, {
+                email: newEmail,
+            }, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('token')}`,
+                },
+            });
+
+            console.log('Email updated:', response.data);
+            alert('Email updated successfully!');
+        } catch (error) {
+            console.error('Error updating email:', error.response?.data || error.message);
+            alert('Error updating email.');
+        }
+    };
+
+    const updatePassword = async () => {
+        const currentPassword = document.querySelectorAll('.inputEmail input')[1].value;
+        const newPassword = document.querySelectorAll('.inputEmail input')[2].value;
+
+        if (!currentPassword || !newPassword) {
+            alert('Please enter both current and new passwords.');
+            return;
+        }
+
+        if (currentPassword === newPassword) {
+            alert('New password cannot be the same as the current password.');
+            return;
+        }
+
+        const userId = decoded.id;
+
+        try {
+            const response = await api.put(`/users/${userId}`, {
+                password: newPassword,
+            }, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('token')}`,
+                },
+            });
+
+            console.log('Password updated:', response.data);
+            alert('Password updated successfully!');
+        } catch (error) {
+            console.error('Error updating password:', error.response?.data || error.message);
+            alert('Error updating password.');
+        }
+    };
+
+
+
     return (
         <>
             <div className={styles.page}>
@@ -111,6 +200,23 @@ function DashboardSettings() {
                     <Link to="/dashboard/settings"><button className={styles.activeButton}>Settings</button></Link>
                     <Link to="/dashboard/help"><button>Help</button></Link>
                     <div className={styles.logout}><button onClick={logOut}>Logout</button></div>
+                </div>
+                <div className={styles.content}>
+                    <div className={styles.settingsDiv}>
+                        <div className="inputName">
+                            User <input type="text" placeholder="New Username" />
+                        </div>
+                        <div className="inputEmail">
+                            Email <input type="email" placeholder="New Email" />
+                        </div>
+                        <div className="inputEmail">
+                            Current Password <input type="password" placeholder="Current Password" />
+                        </div>
+                        <div className="inputEmail">
+                            Password <input type="password" placeholder="New Password" />
+                        </div>
+                        <button onClick={changeUserData}>Confirm</button>
+                    </div>
                 </div>
             </div>
         </>
