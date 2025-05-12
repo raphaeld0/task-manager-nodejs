@@ -1,6 +1,6 @@
 # 🗂️ Task Manager API
 
-**Task Manager API** is a full-stack task management web application built with **Node.js**, **Express**, **React**, and **MongoDB**. It includes secure user authentication, a password reset system via email, and a dynamic user dashboard for managing tasks and profile settings.
+**Task Manager API** is a full-stack task management web application built with **Node.js**, **Express**, **React**, and **MongoDB**. It includes secure user authentication and a dynamic user dashboard for managing tasks and profile settings.
 
 ---
 
