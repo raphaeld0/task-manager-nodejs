@@ -109,7 +109,6 @@ function Dashboard() {
                     <Link to="/dashboard"><button className={styles.activeButton}>Dashboard</button></Link>
                     <Link to="/dashboard/tasks"><button>Tasks</button></Link>
                     <Link to="/dashboard/settings"><button>Settings</button></Link>
-                    <Link to="/dashboard/help"><button>Help</button></Link>
                     <div className={styles.logout}><button onClick={logOut}>Logout</button></div>
                 </div>
 

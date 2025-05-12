@@ -180,9 +180,6 @@ function DashboardTasks() {
                     <Link to="/dashboard/settings">
                         <button>Settings</button>
                     </Link>
-                    <Link to="/dashboard/help">
-                        <button>Help</button>
-                    </Link>
                     <div className={styles.logout}>
                         <button onClick={logOut}>Logout</button>
                     </div>

@@ -205,29 +205,15 @@ app.put("/task/:id", async (req, res) => {
 });
 
 
-// update user
-app.put("/users/:id", async (req, res) => {
+// update name user
+app.put("/userchange/:id", async (req, res) => {
     try {
         const { id } = req.params;
-        const { username, email, password } = req.body;
-        // ve se o email ja existe
-        if (email) {
-            const existingUser = await User.findOne({ email });
-            if (existingUser && existingUser._id.toString() !== id) {
-                return res.status(400).json({ message: "Email already exists. Please use a different email." });
-            }
-        }
-        // novo hash se mudar a senha
-        let updatedFields = { username, email };
-        if (password) {
-            const salt = await bcrypt.genSalt(saltRounds);
-            updatedFields.password = await bcrypt.hash(password, salt);
-        }
-
+        const { username } = req.body;
         // att no db
         const updatedUser = await User.findByIdAndUpdate(
             id,
-            updatedFields,
+            { username },
             { new: true }
         );
 
@@ -235,12 +221,55 @@ app.put("/users/:id", async (req, res) => {
             return res.status(404).json({ message: "User not found." });
         }
 
-        res.status(200).json({ message: "User updated successfully.", user: updatedUser });
+        const token = jwt.sign({
+            id: updatedUser._id,
+            email: updatedUser.email,
+            role: updatedUser.role,
+            username: updatedUser.username
+        }, jwtKey, { expiresIn: '1h' });
+
+        res.status(200).json({ message: "User updated successfully.", user: updatedUser, token });
+
+    } catch (error) { "erro" }
+});
+
+
+// update email user
+app.put("/emailchange/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { email } = req.body;
+
+        const existingEmail = await User.findOne({ email });
+        if (existingEmail) {
+            return res.status(400).json({ message: "That email already exists in our database." });
+        }
+
+        const updatedUser = await User.findByIdAndUpdate(
+            id,
+            { email },
+            { new: true }
+        );
+
+        if (!updatedUser) {
+            return res.status(404).json({ message: "User not found." });
+        }
+
+        const token = jwt.sign({
+            id: updatedUser._id,
+            email: updatedUser.email,
+            role: updatedUser.role,
+            username: updatedUser.username
+        }, jwtKey, { expiresIn: '1h' });
+
+        return res.status(200).json({ message: "Email updated successfully.", token });
+
     } catch (error) {
         console.error(error);
-        res.status(500).json({ message: "An error occurred while updating the user." });
+        return res.status(500).json({ message: "Server error." });
     }
 });
+
 
 
 //post login

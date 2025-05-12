@@ -18,9 +18,12 @@ function DashboardSettings() {
     const navigate = useNavigate();
     const decoded = decodeToken();
 
-    const firstNameC = decoded.username.split(' ')[0];
-    const firstName = firstNameC.charAt(0).toUpperCase() + firstNameC.slice(1);
 
+    let firstName = 'User';
+    if (decoded && decoded.username) {
+        const firstNameC = decoded.username.split(' ')[0];
+        firstName = firstNameC.charAt(0).toUpperCase() + firstNameC.slice(1);
+    }
     useEffect(() => {
         document.title = 'Dashboard';
 
@@ -97,7 +100,7 @@ function DashboardSettings() {
         const userId = decoded.id;
 
         try {
-            const response = await api.put(`/users/${userId}`, {
+            const response = await api.put(`/userchange/${userId}`, {
                 username: newUsername,
             }, {
                 headers: {
@@ -107,24 +110,31 @@ function DashboardSettings() {
 
             console.log('Username updated:', response.data);
             alert('Username updated successfully!');
+
+            localStorage.setItem('token', response.data.token);
         } catch (error) {
             console.error('Error updating username:', error.response?.data || error.message);
             alert('Error updating username.');
         }
     };
-
     const updateEmail = async () => {
         const newEmail = document.querySelector('.inputEmail input').value;
 
+        const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
         if (!newEmail) {
             alert('Please enter a new email.');
+            return;
+        }
+
+        if (!emailPattern.test(newEmail)) {
+            alert('Please enter a valid email address.');
             return;
         }
 
         const userId = decoded.id;
 
         try {
-            const response = await api.put(`/users/${userId}`, {
+            const response = await api.put(`/emailchange/${userId}`, {
                 email: newEmail,
             }, {
                 headers: {
@@ -134,42 +144,13 @@ function DashboardSettings() {
 
             console.log('Email updated:', response.data);
             alert('Email updated successfully!');
+
+            localStorage.setItem('token', response.data.token);
         } catch (error) {
+            if (error.response && error.response.status === 400) {
+                alert('That email already exists in our database.');
+            }
             console.error('Error updating email:', error.response?.data || error.message);
-            alert('Error updating email.');
-        }
-    };
-
-    const updatePassword = async () => {
-        const currentPassword = document.querySelectorAll('.inputEmail input')[1].value;
-        const newPassword = document.querySelectorAll('.inputEmail input')[2].value;
-
-        if (!currentPassword || !newPassword) {
-            alert('Please enter both current and new passwords.');
-            return;
-        }
-
-        if (currentPassword === newPassword) {
-            alert('New password cannot be the same as the current password.');
-            return;
-        }
-
-        const userId = decoded.id;
-
-        try {
-            const response = await api.put(`/users/${userId}`, {
-                password: newPassword,
-            }, {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem('token')}`,
-                },
-            });
-
-            console.log('Password updated:', response.data);
-            alert('Password updated successfully!');
-        } catch (error) {
-            console.error('Error updating password:', error.response?.data || error.message);
-            alert('Error updating password.');
         }
     };
 
@@ -198,24 +179,20 @@ function DashboardSettings() {
                     <Link to="/dashboard"><button>Dashboard</button></Link>
                     <Link to="/dashboard/tasks"><button>Tasks</button></Link>
                     <Link to="/dashboard/settings"><button className={styles.activeButton}>Settings</button></Link>
-                    <Link to="/dashboard/help"><button>Help</button></Link>
                     <div className={styles.logout}><button onClick={logOut}>Logout</button></div>
                 </div>
                 <div className={styles.content}>
-                    <div className={styles.settingsDiv}>
-                        <div className="inputName">
-                            User <input type="text" placeholder="New Username" />
+                    <h1>Account Settings</h1>
+                    <div className={styles.settingsDiv}> <p> User</p>
+                        <div className={`${styles.divName} inputName`}>
+                            <input type="text" className={styles.inputName}  placeholder="New Username" />
+                            <button onClick={updateUsername}>Confirm</button>
+                        </div><p> Email</p>
+                        <div className={`${styles.divEmail} inputEmail`}> 
+                             <input type="email"  className={styles.emailName}  placeholder="New Email" />
+                            <button onClick={updateEmail}>Confirm</button>
                         </div>
-                        <div className="inputEmail">
-                            Email <input type="email" placeholder="New Email" />
-                        </div>
-                        <div className="inputEmail">
-                            Current Password <input type="password" placeholder="Current Password" />
-                        </div>
-                        <div className="inputEmail">
-                            Password <input type="password" placeholder="New Password" />
-                        </div>
-                        <button onClick={changeUserData}>Confirm</button>
+                        <h2>Please confirm your new info before proceeding with change.</h2>
                     </div>
                 </div>
             </div>
