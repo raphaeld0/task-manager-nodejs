@@ -15,7 +15,7 @@
 
 -  **Secure Authentication**: JWT-based login system with bcrypt password hashing.
 -  **Task Management**: Create, complete, and delete tasks.
-- ⚙️**User Settings**: Change name and email through the dashboard.
+-  **User Settings**: Change name and email through the dashboard.
 
 ---
 
